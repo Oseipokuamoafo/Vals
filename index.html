@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lil Tyson,Be My Valentine?</title>
+  <style>
+    /* Basic Reset & Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #ff6b81, #ff9a9e);
+      font-family: 'Arial', sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      color: #fff;
+    }
+
+    /* Floating hearts background */
+    .heart-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .heart-bg span {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.3;
+      animation: floatHeart 10s linear infinite;
+    }
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+      }
+    }
+
+    /* Main Container */
+    .container {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid #fff;
+      border-radius: 15px;
+      padding: 40px 60px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+    }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .prompt {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    .btn {
+      padding: 15px 30px;
+      margin: 10px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+    .yes {
+      background-color: #e74c3c;
+      color: #fff;
+    }
+    .no {
+      background-color: #95a5a6;
+      color: #fff;
+    }
+
+    /* Heart pulse effect for the icon */
+    .heart-icon {
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* 
+      Growing Hug Overlay:
+      - Hidden by default (display: none)
+      - Centered absolutely.
+      - Contains a "hug" emoji or image to animate.
+    */
+    .hug-overlay {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fff 20%, #ff4c4c 80%);
+      justify-content: center;
+      align-items: center;
+      font-size: 3rem;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      z-index: 9999; /* Above everything else */
+      animation-fill-mode: forwards; /* Keep final animation state */
+    }
+
+    /* Keyframes for big hug effect */
+    @keyframes bigHug {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(12);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative Floating Hearts -->
+  <div class="heart-bg">
+    <span style="top: 10%; left: 20%;">❤️</span>
+    <span style="top: 30%; left: 70%;">❤️</span>
+    <span style="top: 50%; left: 40%;">❤️</span>
+    <span style="top: 70%; left: 80%;">❤️</span>
+    <span style="top: 20%; left: 50%;">❤️</span>
+  </div>
+
+  <!-- Valentine Prompt Container -->
+  <div class="container">
+    <h1>
+      Lil Tyson,Be My Valentine? <span class="heart-icon">❤️</span>
+    </h1>
+    <p class="prompt">I can't imagine celebrating this day without you. Will you be my Valentine?</p>
+    <button class="btn yes" id="yesBtn">Yes</button>
+    <button class="btn no" id="noBtn">No</button>
+  </div>
+
+  <!-- Hidden Hug Overlay -->
+  <div class="hug-overlay" id="hugOverlay">🤗</div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const hugOverlay = document.getElementById('hugOverlay');
+
+    yesBtn.addEventListener('click', () => {
+      // Show the hug overlay and start the animation
+      hugOverlay.style.display = 'flex';
+      hugOverlay.style.animation = 'bigHug 2s ease-out';
+
+      // After the hug animation completes (2s), redirect to celebration page
+      setTimeout(() => {
+        window.location.href = 'celebration.html';
+      }, 2000);
+    });
+
+    noBtn.addEventListener('click', () => {
+      alert("Oh no! I'll keep trying to win your heart!");
+    });
+  </script>
+</body>
+</html>

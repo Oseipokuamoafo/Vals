@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Our Valentine Celebration!</title>
+  <style>
+    /* Basic Reset & Styling */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      font-family: 'Arial', sans-serif;
+      height: 100vh;
+      overflow: hidden; /* So floats/animations don't create scrollbars */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      color: #fff;
+      text-align: center;
+    }
+
+    /* Celebration Message Container */
+    .message-container {
+      position: relative;
+      z-index: 5; /* Above confetti and hearts */
+      background: rgba(0, 0, 0, 0.3);
+      padding: 40px 60px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
+    }
+    .message-container h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    }
+    .message-container p {
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    .btn-home {
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      background-color: #e74c3c;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .btn-home:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+    }
+
+    /* Confetti Pieces */
+    .confetti-piece {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      opacity: 0.8;
+      transform: rotate(45deg);
+      animation: confetti-fall 4s linear infinite;
+      z-index: 2; /* Below message but above background */
+    }
+    @keyframes confetti-fall {
+      0%   { top: -10%; opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+
+    /* Floating Teddy Bear */
+    .teddy {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 120px;
+      animation: floatTeddy 3s ease-in-out infinite;
+      z-index: 5; /* Keep teddy above hearts/confetti */
+    }
+    @keyframes floatTeddy {
+      0%   { transform: translateY(0); }
+      50%  { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    /* Floating, Beating Hearts */
+    .floating-heart {
+      position: absolute;
+      bottom: -50px; /* start below the screen */
+      font-size: 2rem; /* can be randomized in JS */
+      z-index: 3; /* above confetti, below message container */
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards; /* so it doesn't pop back after finishing */
+    }
+    /* The floatAndBeat animation:
+       - Moves the heart upward (translateY negative).
+       - Scales up and down to simulate beating.
+       - Fades out (opacity 0 near 100%). */
+    @keyframes floatAndBeat {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      25% {
+        transform: translateY(-25vh) scale(1.3);
+      }
+      50% {
+        transform: translateY(-50vh) scale(1);
+      }
+      75% {
+        transform: translateY(-70vh) scale(1.3);
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Celebration Message Container -->
+  <div class="message-container">
+    <h1>Thank You for Being My Valentine!</h1>
+    <p>Every moment with you is a celebration of love.</p>
+    <!-- Change 'index.html' to your desired home page -->
+    <button class="btn-home" onclick="window.location.href='index.html'">Back Home</button>
+  </div>
+
+  <!-- Floating Teddy Bear -->
+  <img src="https://img.icons8.com/emoji/96/teddy-bear.png" alt="Teddy Bear" class="teddy">
+
+  <!-- JavaScript for Confetti & Floating Hearts -->
+  <script>
+    /***********************************************/
+    /** CONFETTI CODE (same as before) **/
+    /***********************************************/
+    for (let i = 0; i < 50; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
+      confetti.style.left = Math.random() * 100 + '%';
+
+      const colors = ['#e74c3c', '#f1c40f', '#9b59b6', '#e67e22'];
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+      // Random duration between 3 and 5 seconds
+      confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+      document.body.appendChild(confetti);
+    }
+
+    /***********************************************/
+    /** FLOATING, BEATING HEARTS CODE **/
+    /***********************************************/
+    // Array of heart emojis:
+    const heartEmojis = ['❤️','💕','💖','💘'];
+
+    // Generate many floating hearts
+    // Change this number to add or reduce hearts
+    const heartCount = 40;
+
+    for (let i = 0; i < heartCount; i++) {
+      // Create a span to hold an emoji
+      const heart = document.createElement('span');
+      heart.classList.add('floating-heart');
+
+      // Randomly pick one of the emojis
+      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+
+      // Random left position (0% - 100%)
+      const randomLeft = Math.random() * 100;
+
+      // Random animation duration between 5 and 10 seconds
+      const randomDuration = 5 + Math.random() * 5;
+
+      // Random size scaling (font-size)
+      const randomSize = 1 + Math.random() * 1.5; // 1rem to 2.5rem
+      heart.style.fontSize = `${2 * randomSize}rem`;
+
+      heart.style.left = `${randomLeft}%`;
+      heart.style.animation = `floatAndBeat ${randomDuration}s infinite`;
+
+      document.body.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
